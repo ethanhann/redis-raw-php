@@ -11,7 +11,7 @@ use RedisClient\Exception\ErrorResponseException;
  *
  * This class wraps the Cheprasov client: https://github.com/cheprasov/php-redis-client
  */
-class RedisClientAdapter extends RedisClient
+class RedisClientAdapter extends AbstractRedisRawClient
 {
     /** @var AbstractRedisRawClient */
     public $redis;
