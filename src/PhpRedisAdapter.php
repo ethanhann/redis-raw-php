@@ -11,12 +11,12 @@ use RedisException;
  *
  * This class wraps the PhpRedis client: https://github.com/phpredis/phpredis
  */
-class PhpRedisRawAdapter extends RedisRawClient
+class PhpRedisAdapter extends AbstractRedisRawClient
 {
     /** @var Redis */
     public $redis;
 
-    public function connect($hostname = '127.0.0.1', $port = 6379, $db = 0, $password = null): RedisClientInterface
+    public function connect($hostname = '127.0.0.1', $port = 6379, $db = 0, $password = null): RedisRawClientInterface
     {
         $this->redis = new Redis();
         $this->redis->connect($hostname, $port);

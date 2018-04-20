@@ -10,12 +10,12 @@ use Predis\Client;
  *
  * This class wraps the NRK client: https://github.com/nrk/predis
  */
-class PredisAdapter extends RedisRawClient
+class PredisAdapter extends AbstractRedisRawClient
 {
     /** @var Client */
     public $redis;
 
-    public function connect($hostname = '127.0.0.1', $port = 6379, $db = 0, $password = null): RedisClientInterface
+    public function connect($hostname = '127.0.0.1', $port = 6379, $db = 0, $password = null): RedisRawClientInterface
     {
         $this->redis = new Client([
             'scheme' => 'tcp',

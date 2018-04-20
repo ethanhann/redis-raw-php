@@ -10,7 +10,7 @@ use Ehann\RedisRaw\Exceptions\UnsupportedRedisDatabaseException;
 use Exception;
 use Psr\Log\LoggerInterface;
 
-abstract class RedisRawClient implements RedisClientInterface
+abstract class AbstractRedisRawClient implements RedisRawClientInterface
 {
     const PREDIS_LIBRARY = 'Predis';
     const PHP_REDIS_LIBRARY = 'PhpRedis';
@@ -20,7 +20,7 @@ abstract class RedisRawClient implements RedisClientInterface
     /** @var  LoggerInterface */
     protected $logger;
 
-    public function connect($hostname = '127.0.0.1', $port = 6379, $db = 0, $password = null): RedisClientInterface
+    public function connect($hostname = '127.0.0.1', $port = 6379, $db = 0, $password = null): RedisRawClientInterface
     {
         return $this;
     }
@@ -91,7 +91,7 @@ abstract class RedisRawClient implements RedisClientInterface
         return $rawResult === 'OK' ? true : $rawResult;
     }
 
-    public function setLogger(LoggerInterface $logger): RedisClientInterface
+    public function setLogger(LoggerInterface $logger): RedisRawClientInterface
     {
         $this->logger = $logger;
         return $this;
