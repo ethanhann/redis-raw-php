@@ -69,16 +69,17 @@ abstract class AbstractRedisRawClient implements RedisRawClientInterface
         if (!is_string($message)) {
             return;
         }
-        if ($message === 'Cannot create index on db != 0') {
+        $message = strtolower($message);
+        if ($message === 'cannot create index on db != 0') {
             throw new UnsupportedRedisDatabaseException();
         }
-        if ($message === 'Unknown Index name') {
+        if ($message === 'unknown index name') {
             throw new UnknownIndexNameException();
         }
-        if (in_array($message, ['Unsupported Language', 'Unsupported Stemmer Language'])) {
+        if (in_array($message, ['unsupported language', 'unsupported stemmer language'])) {
             throw new UnsupportedRediSearchLanguageException();
         }
-        if (strpos($message, 'ERR unknown command \'FT.') !== false) {
+        if (strpos($message, 'err unknown command \'ft.') !== false) {
             throw new UnknownRediSearchCommandException($message);
         }
         if ($isPayloadException) {
