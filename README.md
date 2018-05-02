@@ -1,1 +1,1 @@
-# redis-raw
+# PHP/Redis connectors.
