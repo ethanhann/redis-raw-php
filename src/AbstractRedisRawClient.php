@@ -40,11 +40,6 @@ abstract class AbstractRedisRawClient implements RedisRawClientInterface
 
     public function prepareRawCommandArguments(string $command, array $arguments) : array
     {
-        foreach ($arguments as $index => $argument) {
-            if (!is_scalar($arguments[$index])) {
-                $arguments[$index] = (string)$argument;
-            }
-        }
         array_unshift($arguments, $command);
         if ($this->logger) {
             $this->logger->debug(implode(' ', $arguments));
