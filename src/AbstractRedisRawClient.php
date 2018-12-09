@@ -56,9 +56,6 @@ abstract class AbstractRedisRawClient implements RedisRawClientInterface
      * @param $payload
      * @return mixed
      * @throws RawCommandErrorException
-     * @throws UnknownIndexNameException
-     * @throws UnknownRediSearchCommandException
-     * @throws UnsupportedRediSearchLanguageException
      * @throws UnsupportedRedisDatabaseException
      */
     public function validateRawCommandResults($payload)
@@ -72,15 +69,6 @@ abstract class AbstractRedisRawClient implements RedisRawClientInterface
         $message = strtolower($message);
         if ($message === 'cannot create index on db != 0') {
             throw new UnsupportedRedisDatabaseException();
-        }
-        if ($message === 'unknown index name') {
-            throw new UnknownIndexNameException();
-        }
-        if (in_array($message, ['unsupported language', 'unsupported stemmer language'])) {
-            throw new UnsupportedRediSearchLanguageException();
-        }
-        if (strpos($message, 'err unknown command \'ft.') !== false) {
-            throw new UnknownRediSearchCommandException($message);
         }
         if ($isPayloadException) {
             throw new RawCommandErrorException('', 0, $payload);
