@@ -34,7 +34,7 @@ abstract class AbstractRedisRawClient implements RedisRawClientInterface
     {
     }
 
-    public function rawCommand(string $command, array $arguments)
+    public function rawCommand(string $command, array $arguments = [])
     {
     }
 
@@ -49,11 +49,13 @@ abstract class AbstractRedisRawClient implements RedisRawClientInterface
 
     /**
      * @param $payload
+     * @param string $command
+     * @param array $arguments
      * @return mixed
      * @throws RawCommandErrorException
      * @throws UnsupportedRedisDatabaseException
      */
-    public function validateRawCommandResults($payload)
+    public function validateRawCommandResults($payload, string $command, array $arguments)
     {
         $isPayloadException = $payload instanceof Exception;
         $message = $isPayloadException ? $payload->getMessage() : $payload;
@@ -66,7 +68,8 @@ abstract class AbstractRedisRawClient implements RedisRawClientInterface
             throw new UnsupportedRedisDatabaseException();
         }
         if ($isPayloadException) {
-            throw new RawCommandErrorException('', 0, $payload);
+            $message = $command . ' ' . implode(' ', $arguments);
+            throw new RawCommandErrorException($message, 0, $payload);
         }
     }
 

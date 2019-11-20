@@ -30,14 +30,14 @@ class PhpRedisAdapter extends AbstractRedisRawClient
         return $this->redis->multi($usePipeline ? Redis::PIPELINE : Redis::MULTI);
     }
 
-    public function rawCommand(string $command, array $arguments)
+    public function rawCommand(string $command, array $arguments = [])
     {
         $arguments = $this->prepareRawCommandArguments($command, $arguments);
         $rawResult = null;
         try {
             $rawResult = call_user_func_array([$this->redis, 'rawCommand'], $arguments);
         } catch (RedisException $exception) {
-            $this->validateRawCommandResults($exception);
+            $this->validateRawCommandResults($exception, $command, $arguments);
         }
         return $this->normalizeRawCommandResult($rawResult);
     }

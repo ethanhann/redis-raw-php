@@ -2,29 +2,26 @@
 
 namespace Ehann\RedisRaw;
 
-use Predis\Client;
+use RedisClient\RedisClient;
+use RedisClient\Exception\ErrorResponseException;
 
 /**
- * Class PredisAdapter
+ * Class RedisRawClient
  * @package Ehann\RedisRaw
  *
- * This class wraps the NRK client: https://github.com/nrk/predis
  */
-class PredisAdapter extends AbstractRedisRawClient
+class RedisRawClient extends AbstractRedisRawClient
 {
-    /** @var Client */
     public $redis;
 
     public function connect($hostname = '127.0.0.1', $port = 6379, $db = 0, $password = null): RedisRawClientInterface
     {
-        $this->redis = new Client([
-            'scheme' => 'tcp',
-            'host' => $hostname,
-            'port' => $port,
+        $this->redis = new RedisClient([
+            'server' => "$hostname:$port",
             'database' => $db,
             'password' => $password,
         ]);
-        $this->redis->connect();
+
         return $this;
     }
 
@@ -35,9 +32,13 @@ class PredisAdapter extends AbstractRedisRawClient
 
     public function rawCommand(string $command, array $arguments = [])
     {
-        $preparedArguments = $this->prepareRawCommandArguments($command, $arguments);
-        $rawResult = $this->redis->executeRaw($preparedArguments);
-        $this->validateRawCommandResults($rawResult, $command, $arguments);
+        $arguments = $this->prepareRawCommandArguments($command, $arguments);
+        $rawResult = null;
+        try {
+            $rawResult = $this->redis->executeRaw($arguments);
+        } catch (ErrorResponseException $exception) {
+            $this->validateRawCommandResults($exception, $command, $arguments);
+        }
         return $this->normalizeRawCommandResult($rawResult);
     }
 }
