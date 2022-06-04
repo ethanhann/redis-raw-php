@@ -13,10 +13,7 @@ use PHPUnit\Framework\TestCase;
 
 abstract class AbstractTestCase extends TestCase
 {
-    /** @var string */
-    protected $indexName;
-    /** @var RedisRawClientInterface */
-    protected $redisClient;
+    protected RedisRawClientInterface $redisClient;
 
     public function __construct($name = null, array $data = [], $dataName = '')
     {

@@ -9,7 +9,6 @@
          processIsolation="false"
          stopOnError="false"
          stopOnFailure="false"
-         syntaxCheck="true"
          verbose="true"
 >
     <testsuites>
@@ -23,14 +22,14 @@
         </whitelist>
     </filter>
     <php>
-        <env name="REDIS_LIBRARY" value="RedisClient" />
-        <env name="REDIS_HOST" value="localhost" />
-        <env name="REDIS_PORT" value="6379" />
-        <env name="REDIS_DB" value="0" />
-        <env name="LOG_FILE" value="./tests.log" />
-        <env name="IS_LOGGING_ENABLED" value="true" />
+        <env name="REDIS_LIBRARY" value="RedisClient"/>
+        <env name="REDIS_HOST" value="localhost"/>
+        <env name="REDIS_PORT" value="6379"/>
+        <env name="REDIS_DB" value="0"/>
+        <env name="LOG_FILE" value="./tests.log"/>
+        <env name="IS_LOGGING_ENABLED" value="true"/>
     </php>
     <listeners>
-        <listener class="Ehann\Tests\TestTimeListener" />
+        <listener class="Ehann\Tests\TestTimeListener"/>
     </listeners>
 </phpunit>
