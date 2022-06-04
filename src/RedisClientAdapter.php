@@ -13,7 +13,7 @@ use RedisClient\Exception\ErrorResponseException;
  */
 class RedisClientAdapter extends AbstractRedisRawClient
 {
-    /** @var AbstractRedisRawClient */
+    /** @var RedisClient */
     public $redis;
 
     public function connect($hostname = '127.0.0.1', $port = 6379, $db = 0, $password = null): RedisRawClientInterface

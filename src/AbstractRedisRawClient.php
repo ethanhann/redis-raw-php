@@ -3,9 +3,6 @@
 namespace Ehann\RedisRaw;
 
 use Ehann\RedisRaw\Exceptions\RawCommandErrorException;
-use Ehann\RedisRaw\Exceptions\UnknownIndexNameException;
-use Ehann\RedisRaw\Exceptions\UnknownRediSearchCommandException;
-use Ehann\RedisRaw\Exceptions\UnsupportedRediSearchLanguageException;
 use Ehann\RedisRaw\Exceptions\UnsupportedRedisDatabaseException;
 use Exception;
 use Psr\Log\LoggerInterface;
@@ -17,8 +14,7 @@ abstract class AbstractRedisRawClient implements RedisRawClientInterface
     const REDIS_CLIENT_LIBRARY = 'RedisClient';
 
     public $redis;
-    /** @var  LoggerInterface */
-    protected $logger;
+    protected LoggerInterface $logger;
 
     public function connect($hostname = '127.0.0.1', $port = 6379, $db = 0, $password = null): RedisRawClientInterface
     {
