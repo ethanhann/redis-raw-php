@@ -20,8 +20,8 @@ class PhpRedisAdapter extends AbstractRedisRawClient
     {
         $this->redis = new Redis();
         $this->redis->connect($hostname, $port);
-        $this->redis->select($db);
         $this->redis->auth($password);
+        $this->redis->select($db);
         return $this;
     }
 
