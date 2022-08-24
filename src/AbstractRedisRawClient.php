@@ -44,11 +44,10 @@ abstract class AbstractRedisRawClient implements RedisRawClientInterface
     }
 
     /**
-     * @param $rawResult
      * @throws RawCommandErrorException
      * @throws UnsupportedRedisDatabaseException
      */
-    public function validateRawCommandResults($rawResult)
+    public function validateRawCommandResults($rawResult, string $command, array $arguments)
     {
         $isRawResultException = $rawResult instanceof Exception;
         $message = $isRawResultException ? $rawResult->getMessage() : $rawResult;
