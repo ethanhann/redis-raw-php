@@ -23,16 +23,16 @@
     "prefer-stable": true,
     "require": {
         "php": ">=7",
-        "psr/log": "^1.0"
+        "psr/log": "^3.0.0"
     },
     "require-dev": {
-        "ukko/phpredis-phpdoc": "^2.2@dev",
-        "phpunit/phpunit": "^6.0",
-        "mockery/mockery": "^0.9.9",
-        "predis/predis": "^1.1",
-        "friendsofphp/php-cs-fixer": "^2.2",
-        "consolidation/robo": "^1.0",
-        "monolog/monolog": "^1.23",
-        "cheprasov/php-redis-client": "^1.8"
+        "ukko/phpredis-phpdoc": "^5.0.1-beta8",
+        "phpunit/phpunit": "^9.5.23",
+        "mockery/mockery": "^1.5.0",
+        "predis/predis": "^v2.0.0",
+        "friendsofphp/php-cs-fixer": "^v3.10.0",
+        "consolidation/robo": "^4.0.0-alpha1",
+        "monolog/monolog": "^3.2.0",
+        "cheprasov/php-redis-client": "^1.10.0"
     }
 }
