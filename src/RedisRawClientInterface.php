@@ -11,6 +11,6 @@ interface RedisRawClientInterface
     public function multi(bool $usePipeline = false);
     public function rawCommand(string $command, array $arguments);
     public function setLogger(LoggerInterface $logger): RedisRawClientInterface;
-    public function prepareRawCommandArguments(string $command, array $arguments) : array;
+    public function prepareRawCommandArguments(string $command, array $arguments): array;
     public function validateRawCommandResults($rawResult);
 }

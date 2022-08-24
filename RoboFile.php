@@ -1,32 +1,29 @@
 <?php
 
+use Robo\Symfony\ConsoleIO;
+use Robo\Collection\CollectionBuilder;
+use Robo\Result;
 use Robo\Tasks;
-use Robo\Collection\Collection;
 
 require_once 'vendor/autoload.php';
 
 class RoboFile extends Tasks
 {
-    function build()
+    public function build(ConsoleIO $io): Result
     {
-        return (new Collection())
-            ->add($this->taskFixCodeStyle())
-            ->add($this->taskPhpUnit())
+        return $this->collectionBuilder($io)
+            ->addTask($this->taskFixCodeStyle())
+            ->addTask($this->taskPhpUnit())
             ->run();
     }
 
-    function test()
+    public function test(): Result
     {
         return $this->taskPhpUnit()->run();
     }
 
-    function taskFixCodeStyle()
+    public function taskFixCodeStyle(): CollectionBuilder
     {
         return $this->taskExec('./vendor/bin/php-cs-fixer fix src');
-    }
-
-    function fixCodeStyle()
-    {
-        return $this->taskFixCodeStyle()->run();
     }
 }
