@@ -3,18 +3,15 @@
 namespace Ehann\RedisRaw;
 
 use Ehann\RedisRaw\Exceptions\RawCommandErrorException;
-use Ehann\RedisRaw\Exceptions\UnknownIndexNameException;
-use Ehann\RedisRaw\Exceptions\UnknownRediSearchCommandException;
-use Ehann\RedisRaw\Exceptions\UnsupportedRediSearchLanguageException;
 use Ehann\RedisRaw\Exceptions\UnsupportedRedisDatabaseException;
 use Exception;
 use Psr\Log\LoggerInterface;
 
 abstract class AbstractRedisRawClient implements RedisRawClientInterface
 {
-    const PREDIS_LIBRARY = 'Predis';
-    const PHP_REDIS_LIBRARY = 'PhpRedis';
-    const REDIS_CLIENT_LIBRARY = 'RedisClient';
+    public const PREDIS_LIBRARY = 'Predis';
+    public const PHP_REDIS_LIBRARY = 'PhpRedis';
+    public const REDIS_CLIENT_LIBRARY = 'RedisClient';
 
     public $redis;
     /** @var  LoggerInterface */
@@ -38,7 +35,7 @@ abstract class AbstractRedisRawClient implements RedisRawClientInterface
     {
     }
 
-    public function prepareRawCommandArguments(string $command, array $arguments) : array
+    public function prepareRawCommandArguments(string $command, array $arguments): array
     {
         array_unshift($arguments, $command);
         if ($this->logger) {
@@ -48,15 +45,14 @@ abstract class AbstractRedisRawClient implements RedisRawClientInterface
     }
 
     /**
-     * @param $payload
-     * @return mixed
+     * @param $rawResult
      * @throws RawCommandErrorException
      * @throws UnsupportedRedisDatabaseException
      */
-    public function validateRawCommandResults($payload)
+    public function validateRawCommandResults($rawResult)
     {
-        $isPayloadException = $payload instanceof Exception;
-        $message = $isPayloadException ? $payload->getMessage() : $payload;
+        $isRawResultException = $rawResult instanceof Exception;
+        $message = $isRawResultException ? $rawResult->getMessage() : $rawResult;
 
         if (!is_string($message)) {
             return;
@@ -65,8 +61,8 @@ abstract class AbstractRedisRawClient implements RedisRawClientInterface
         if ($message === 'cannot create index on db != 0') {
             throw new UnsupportedRedisDatabaseException();
         }
-        if ($isPayloadException) {
-            throw new RawCommandErrorException('', 0, $payload);
+        if ($isRawResultException) {
+            throw new RawCommandErrorException('', 0, $rawResult);
         }
     }
 
