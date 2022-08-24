@@ -32,6 +32,10 @@ class RedisClientAdapter extends AbstractRedisRawClient
         return $this->redis->pipeline();
     }
 
+    /**
+     * @throws Exceptions\UnsupportedRedisDatabaseException
+     * @throws Exceptions\RawCommandErrorException
+     */
     public function rawCommand(string $command, array $arguments)
     {
         $arguments = $this->prepareRawCommandArguments($command, $arguments);
@@ -39,7 +43,7 @@ class RedisClientAdapter extends AbstractRedisRawClient
         try {
             $rawResult = $this->redis->executeRaw($arguments);
         } catch (ErrorResponseException $exception) {
-            $this->validateRawCommandResults($exception);
+            $this->validateRawCommandResults($exception, $command, $arguments);
         }
         return $this->normalizeRawCommandResult($rawResult);
     }

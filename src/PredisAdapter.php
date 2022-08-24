@@ -33,11 +33,15 @@ class PredisAdapter extends AbstractRedisRawClient
         return $this->redis->pipeline();
     }
 
+    /**
+     * @throws Exceptions\UnsupportedRedisDatabaseException
+     * @throws Exceptions\RawCommandErrorException
+     */
     public function rawCommand(string $command, array $arguments)
     {
         $preparedArguments = $this->prepareRawCommandArguments($command, $arguments);
         $rawResult = $this->redis->executeRaw($preparedArguments);
-        $this->validateRawCommandResults($rawResult);
+        $this->validateRawCommandResults($rawResult, $command, $arguments);
         return $this->normalizeRawCommandResult($rawResult);
     }
 }
