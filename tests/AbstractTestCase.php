@@ -15,9 +15,9 @@ abstract class AbstractTestCase extends TestCase
 {
     protected RedisRawClientInterface $redisClient;
 
-    public function __construct($name = null, array $data = [], $dataName = '')
+    protected function setUp(): void
     {
-        parent::__construct($name, $data, $dataName);
+        parent::setUp();
 
         $host = getenv('REDIS_HOST') ?? '127.0.0.1';
         $port = getenv('REDIS_PORT') ?? 6379;
