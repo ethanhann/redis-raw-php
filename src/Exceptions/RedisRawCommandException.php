@@ -2,11 +2,9 @@
 
 namespace Ehann\RedisRaw\Exceptions;
 
-use Exception;
-
-class RedisRawCommandException extends Exception
+class RedisRawCommandException extends \Exception
 {
-    public function __construct($message = '', $code = 0, Exception $previous = null)
+    public function __construct($message = '', $code = 0, ?\Throwable $previous = null)
     {
         parent::__construct(trim("Redis Raw Command Failed. $message"), $code, $previous);
     }
