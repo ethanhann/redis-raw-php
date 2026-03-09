@@ -20,7 +20,9 @@ class PhpRedisAdapter extends AbstractRedisRawClient
     {
         $this->redis = new Redis();
         $this->redis->connect($hostname, $port);
-        $this->redis->auth($password);
+        if ($password !== null) {
+            $this->redis->auth($password);
+        }
         $this->redis->select($db);
         return $this;
     }
@@ -43,6 +45,7 @@ class PhpRedisAdapter extends AbstractRedisRawClient
         } catch (RedisException $exception) {
             $this->validateRawCommandResults($exception, $command, $arguments);
         }
+        $this->validateRawCommandResults($rawResult, $command, $arguments);
         return $this->normalizeRawCommandResult($rawResult);
     }
 }

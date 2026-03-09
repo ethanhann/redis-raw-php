@@ -19,9 +19,9 @@ abstract class AbstractTestCase extends TestCase
     {
         parent::setUp();
 
-        $host = getenv('REDIS_HOST') ?? '127.0.0.1';
-        $port = getenv('REDIS_PORT') ?? 6379;
-        $db = getenv('REDIS_DB') ?? 0;
+        $host = getenv('REDIS_HOST') ?: '127.0.0.1';
+        $port = getenv('REDIS_PORT') ?: 6379;
+        $db = getenv('REDIS_DB') ?: 0;
         $password = getenv('REDIS_PASSWORD');
         if (!$password) {
             $password = null;
